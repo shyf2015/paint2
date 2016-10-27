@@ -1,0 +1,75 @@
+.container{
+	margin: 10px auto;
+	width: 800px;
+	height: 500px;
+	border: 5px solid #579;
+}
+.tools{
+	width: 100%;
+	height: 50px;
+	border-bottom: 3px solid #579;
+}
+.tools b{
+	display: block;
+	float: left;
+	line-height: 50px;
+	margin-left: 5px; 
+}
+.tools .px0{
+	margin-top: 20px;
+	width: 50px;
+	height: 1px;
+	background-color: #000;
+	cursor: pointer;
+	border: 2px solid #fff;
+}
+.tools .px2{
+	height: 2px;
+}
+.tools .px3{
+	height: 3px;
+}
+.tools .px4{
+	height: 4px;
+}
+.tools .px5{
+	height: 5px;
+}
+.tools .xinzhuang{
+	margin-top: 13px; 
+	width: 20px;
+	height: 20px;
+	border: 2px solid #000;
+	cursor: pointer;
+}
+.tools .xinzhuang2{
+	background-color: #000;
+	cursor: pointer;
+}
+.tools .xinzhuang3{
+	border-radius: 50%;
+	cursor: not-allowed;
+}
+.tools .xinzhuang4{
+	border-radius: 50%;
+	background-color: #000;
+	cursor: not-allowed;
+}
+.tools .clear{
+	margin-left: 50px;
+	cursor: pointer;
+}
+.tools #color{
+	display: block;
+	float: left;
+	margin: 10px;
+	cursor: pointer;
+}
+#svg{
+	width: 100%;
+	height: 450px;
+	cursor: url('img/qianbi.cur'),default;
+}
+.tools .biankuang{
+	border: 5px solid #ddd;
+}

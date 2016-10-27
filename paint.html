@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>画板</title>
+	<link rel="stylesheet" type="text/css" href="paint.css">
+</head>
+<body>
+	<h1 align="center">画图板</h1>
+	<div class="container">
+		<div class="tools">
+			<b>直线</b>
+			<b class="px1 px0 biankuang"></b>
+			<b class="px2 px0"></b>
+			<b class="px3 px0"></b>
+			<b class="px4 px0"></b>
+			<b class="px5 px0"></b>
+			<b>颜色</b>
+			<input type="color" id="color" value="#000000">
+			<b>形状</b>
+			<b class="xinzhuang xinzhuang1"></b>
+			<b class="xinzhuang xinzhuang2"></b>
+			<b class="xinzhuang xinzhuang3"></b>
+			<b class="xinzhuang xinzhuang4"></b>
+			<b class="clear">清空画板</b>
+		</div>
+		<svg id="svg"></svg>
+	</div>
+<script src="jquery.js"></script>
+<script type="text/javascript">
+(function(){
+	console.log(Math.min(3,5));
+	var x1,y1,x2,y2,flag=false;
+	var lineW = 1;
+	var color = '#000';
+	var style = 'line';
+	function yangshi(){
+		$('.px0').on('click',function(){
+			lineW = $(this).index()+1;
+			$(this).addClass('biankuang').siblings().removeClass('biankuang');
+			style = 'line';
+		})
+		$('#color').on('change',function(){
+			color = $('#color').val();
+		})
+		$('.xinzhuang1').on('click',function(){
+			style = 'kongju';
+		})
+		$('.xinzhuang2').on('click',function(){
+			style = 'shiju';
+		})
+		$('.xinzhuang3').on('click',function(){
+			style = 'kongyuan';
+		})
+		$('.xinzhuang4').on('click',function(){
+			style = 'shiyuan';
+		})
+	}
+	yangshi();
+	$('svg').on('mousedown',function(e){
+		flag = true;
+		x1 = e.offsetX;
+		y1 = e.offsetY;
+	})
+	$('svg').on('mousemove',function(e){
+		if(flag==false){return;}
+		x2 = e.offsetX;
+		y2 = e.offsetY;
+		if(style=='line'){
+			huaxian(x1,y1,x2,y2);
+			x1 = x2;
+			y1 = y2;
+		}
+		if(style=='shiju'){huashiju(x1,y1,x2,y2);}
+		if(style=='kongju'){huakongju(x1,y1,x2,y2);}
+	})
+	function huaxian(x1,y1,x2,y2){
+		var line = $(document.createElementNS('http://www.w3.org/2000/svg','line')).attr({
+				'x1':x1,
+				'y1':y1,
+				'x2':x2,
+				'y2':y2,
+				'stroke':color,
+				'stroke-width':lineW
+		})
+		$('svg').append(line);
+	}
+	function huakongju(x1,y1,x2,y2){
+		if(x1>x2 || y1>y2){return;}
+		$('svg').find('rect').remove();
+		var kongju = $(document.createElementNS('http://www.w3.org/2000/svg','rect')).attr({
+			'x':x1,
+			'y':y1,
+			'width':Math.abs(x2-x1),
+			'height':Math.abs(y2-y1),
+			'stroke':color,
+			'fill':'none',
+			'stroke-width':lineW
+		})
+		$('svg').append(kongju);
+	}
+	function huashiju(x1,y1,x2,y2){
+		if(x1>x2 || y1>y2){return;}
+		var shiju = $(document.createElementNS('http://www.w3.org/2000/svg','rect')).attr({
+			'x':x1,
+			'y':y1,
+			'width':Math.abs(x2-x1),
+			'height':Math.abs(y2-y1),
+			'stroke':color,
+			'stroke-width':lineW
+		})
+		$('svg').append(shiju);
+	}
+	function huashiyuan(x1,y1,x2,y2){
+		if(x1>x2 || y1>y2){return;}
+		$('svg').find('circle').remove();
+		var shiyuan = $(document.createElementNS('http://www.w3.org/2000/svg','circle')).attr({
+			'cx':(x2+x1)/2,
+			'cy':(y2+y1)/2,
+			'r':Math.min(y2-y1,x2-x1)/2,
+			'fill':color
+		})
+		$('svg').append(shiyuan);
+	}
+	$('.clear').on('click',function(){
+		$('svg').children().remove();
+	})
+	$('svg').on('mouseup',function(){
+		flag = false;
+	})
+})();
+</script>
+</body>
+</html>
